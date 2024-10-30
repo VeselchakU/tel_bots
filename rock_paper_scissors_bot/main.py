@@ -2,6 +2,7 @@ import asyncio
 import logging
 
 from aiogram import Bot,Dispatcher
+from keyboards.set_menu import set_main_menu
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from config_data.config import Config, load_config
@@ -30,6 +31,9 @@ async def main():
         default=DefaultBotProperties(parse_mode=ParseMode.HTML)
     )
     dp = Dispatcher()
+
+    # Настраиваем кнопку Menu
+    await set_main_menu(bot)
 
     # Регистриуем роутеры в диспетчере
     dp.include_router(user_handlers.router)
