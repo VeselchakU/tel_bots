@@ -8,13 +8,21 @@ book: dict[int, str] = {}
 
 # Функция, возвращающая строку с текстом страницы и ее размер
 def _get_part_text(text: str, start: int, size: int) -> tuple[str, int]:
-    CHAR_LST = ',.!:;?'
-    text = text[start:]
-    for i in range(1, 300):
-        if text[:size][-i] in CHAR_LST and text[:size + 1][-i] not in CHAR_LST:
-            text = text[:size - i + 1]
-            break
-    return text, len(text)
+    result_string = text[start : start + size + 1]
+    flag = True
+
+    if size + 1 <= len(text[start:]):
+        while result_string[-1] in ",.!:;?":
+            result_string = result_string[:-1]
+            flag = False
+
+        if flag:
+            result_string = result_string[:-1]
+
+        while result_string[-1] not in ",.!:;?":
+            result_string = result_string[:-1]
+
+    return result_string, len(result_string)
 
 # Функция, формирующая словарь книги
 def prepare_book(path: str) -> None:
